@@ -1,6 +1,6 @@
 # VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models
 
-[Website]() | [Paper]() | [Demo]() | [Video]() | [Slides]() | [Poster]()
+[Website]() | [Paper](https://openreview.net/forum?id=FRA56oBRy7&referrer=%5Bthe%20profile%20of%20Zihao%20Zhu%5D(%2Fprofile%3Fid%3D~Zihao_Zhu2)) | [Video]() | [Slides]() | [Poster]()
 
 This is the official implementation of ICLR 2024 paper "VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models". 
 
@@ -24,9 +24,9 @@ pip install -e .
 
 ### Detect Poisoned Samples 
 
-Take CIFAR-10 as an example.
+Let's take CIFAR-10 as an example.
 
-#### 1. Prepare Data
+#### 1. Data Preparation
 
 Download the poisoned dataset ([download link](https://drive.google.com/file/d/1jNoNStqOnyE3Z3ukPgbuLG0EV_TI8OGR/view?usp=drive_link)) and put it in the `data` folder.
 
@@ -77,5 +77,10 @@ python train/train_on_cleaned_bd.py
 ## Citation
 If you find our work useful, please consider citing us!
 ```bibtex
-
+ @article{zhu2023vdc,
+      title={VDC: Versatile Data Cleanser for Detecting Dirty Samples via Visual-Linguistic Inconsistency},
+      author={Zhu, Zihao and Zhang, Mingda and Wei, Shaokui and Wu, Bingzhe and Wu, Baoyuan},
+      journal={arXiv preprint arXiv:2309.16211},
+      year={2023}
+      }
 ```
