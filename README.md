@@ -1,6 +1,6 @@
 # VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models
 
-[Website]() | [Paper](https://openreview.net/forum?id=FRA56oBRy7&referrer=%5Bthe%20profile%20of%20Zihao%20Zhu%5D(%2Fprofile%3Fid%3D~Zihao_Zhu2)) | [Video]() | [Slides]() | [Poster]()
+[Website](https://versatile-data-cleanser.github.io/) | [Paper](https://openreview.net/forum?id=FRA56oBRy7&referrer=%5Bthe%20profile%20of%20Zihao%20Zhu%5D(%2Fprofile%3Fid%3D~Zihao_Zhu2)) | [Video]() | [Slides](https://versatile-data-cleanser.github.io/static/files/report.pptx) | [Poster]()
 
 This is the official implementation of ICLR 2024 paper "VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models". 
 
