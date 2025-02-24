@@ -141,10 +141,11 @@ print(res)
 ## 📝 Citation
 If you find our work useful, please consider citing us!
 ```bibtex
- @article{zhu2023vdc,
-      title={VDC: Versatile Data Cleanser for Detecting Dirty Samples via Visual-Linguistic Inconsistency},
-      author={Zhu, Zihao and Zhang, Mingda and Wei, Shaokui and Wu, Bingzhe and Wu, Baoyuan},
-      journal={arXiv preprint arXiv:2309.16211},
-      year={2023}
-      }
+@inproceedings{zhu2024vdc,
+      title={{VDC}: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models},
+      author={Zihao Zhu and Mingda Zhang and Shaokui Wei and Bingzhe Wu and Baoyuan Wu},
+      booktitle={The Twelfth International Conference on Learning Representations},
+      year={2024},
+      url={https://openreview.net/forum?id=ygxTuVz9eU}
+}
 ```
