@@ -1,9 +1,28 @@
+Metadata-Version: 2.2
+Name: vdc
+Version: 2.0.0
+Summary: A Python package for verifying consistency between multimodal data
+Home-page: https://github.com/zihao-ai/vdc
+Author: Zihao Zhu
+Author-email: zihaozhu1996@gmail.com
+License: MIT
+Project-URL: Bug Tracker, https://github.com/zihao-ai/vdc/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: openai>=1.12.0
+Requires-Dist: requests>=2.24.0
+Requires-Dist: pandas>=1.0.0
+Requires-Dist: opencv-python>=4.0.0
+
 <p align="center">
     <img src="fig/logo.png" width="150" style="margin-bottom: 0.2;"/>
 <p>
 
 # VDC: Versatile Data Cleanser
-
 This is the official implementation of ICLR 2024 paper "VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models". 
 
 
@@ -13,19 +32,6 @@ This is the official implementation of ICLR 2024 paper "VDC: Versatile Data Clea
  :octocat:[Github](https://github.com/zihao-ai/vdc) 🌐 [**Website**](https://versatile-data-cleanser.github.io/) 📝  [**Paper**](https://arxiv.org/pdf/2309.16211) 🗂️  [**Data**](https://drive.google.com/file/d/1jNoNStqOnyE3Z3ukPgbuLG0EV_TI8OGR/view?usp=drive_link)
 
 </div>
-
-
-- [Overview](#-overview)
-- [News](#-news)
-- [Installation](#-installation)
-- [Usage](#-usage)
-  - [Closed-source Service](#closed-source-service)
-  - [Open-source Service](#open-source-service)
-  - [Clean Image-Text Samples](#clean-image-text-samples)
-  - [Clean Video-Text Samples](#clean-video-text-samples)
-  - [Parameter Description](#parameter-description)
-  - [Result Description](#result-description)
-- [Citation](#-citation)
 
 
 ## 🔔 Overview
@@ -108,9 +114,8 @@ consistency_score = res.consistency_score
 is_consistent = res.is_consistent(threshold=0.5)
 
 ```
-
-### Clean Video-Text Samples
 You can clean video-text samples by the following code:
+### Clean Video-Text Samples
 ```python
 res = cleanser.process_video_text_pair(
     video_path="example/test_video.mp4",

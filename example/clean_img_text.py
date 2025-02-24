@@ -3,9 +3,9 @@ from vdc.utils.config import VDCConfig
 
 config = VDCConfig(
     llm_base_url="https://hk.uniapi.io/v1/",
-    llm_api_key="sk-T0e7qj7yQJEKXDu_srXOAQWQ4dY0ucJrda9enRj5nvbA3rYwKwvSl8CApVA",
+    llm_api_key="sk-xxx",
     mllm_base_url="https://hk.uniapi.io/v1/",
-    mllm_api_key="sk-T0e7qj7yQJEKXDu_srXOAQWQ4dY0ucJrda9enRj5nvbA3rYwKwvSl8CApVA",
+    mllm_api_key="sk-xxx",
 )
 
 cleanser = DataCleanser(config=config, llm_model="gpt-4o-mini", mllm_model="gpt-4o-mini")

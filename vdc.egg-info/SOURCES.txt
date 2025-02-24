@@ -1,0 +1,13 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+vdc/__init__.py
+vdc/cleanser.py
+vdc/prompts.py
+vdc.egg-info/PKG-INFO
+vdc.egg-info/SOURCES.txt
+vdc.egg-info/dependency_links.txt
+vdc.egg-info/requires.txt
+vdc.egg-info/top_level.txt
