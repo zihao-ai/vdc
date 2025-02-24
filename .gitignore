@@ -1,0 +1,8 @@
+dist/
+vdc.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
