@@ -1,80 +1,129 @@
-# VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models
+<p align="center">
+    <img src="fig/logo.png" width="150" style="margin-bottom: 0.2;"/>
+<p>
 
-[Website](https://versatile-data-cleanser.github.io/) | [Paper](https://arxiv.org/pdf/2309.16211) | [Slides](https://versatile-data-cleanser.github.io/static/files/report.pptx) | [Poster](https://versatile-data-cleanser.github.io/static/files/report.pptx)
-
+# VDC: Versatile Data Cleanser
 This is the official implementation of ICLR 2024 paper "VDC: Versatile Data Cleanser based on Visual-Linguistic Inconsistency by Multimodal Large Language Models". 
 
-## Overview
+
+
+<div align="center">
+
+ :octocat:[Github](https://github.com/zihao-ai/vdc) 🌐 [**Website**](https://versatile-data-cleanser.github.io/) 📝  [**Paper**](https://arxiv.org/pdf/2309.16211) 🗂️  [**Data**](https://drive.google.com/file/d/1jNoNStqOnyE3Z3ukPgbuLG0EV_TI8OGR/view?usp=drive_link)
+
+</div>
+
+
+## 🔔 Overview
 We find a commonality of various dirty samples is **visual-linguistic inconsistency** between images and associated labels. To capture the semantic inconsistency between modalities, we propose versatile data cleanser (VDC) leveraging the surpassing capabilities of multimodal large language models (MLLM) in cross-modal alignment and reasoning. It consists of three consecutive modules: the visual question generation module to generate insightful questions about the image; the visual question answering module to acquire the semantics of the visual content by answering the questions with MLLM; followed by the visual answer evaluation module to evaluate the inconsistency. Extensive experiments demonstrate its superior performance and generalization to various categories and types of dirty samples.
 
-![](framework.png)
+![](fig/framework.png)
 
-## Installation
+
+
+## 🚀 News
+- [2025-02-24] We update VDC to support image-text samples and video-text samples.
+- [2025-02-23] The code is published on PyPI. Now you can quickly use VDC by `pip install vdc`.
+- [2024-01-25] The paper is accepted by ICLR 2024.
+
+## 📦 Installation
+You can install VDC using pip:
 ```bash
+conda create -n vdc python=3.12 -y
+conda activate vdc
+pip install vdc
+```
+You can also install VDC locally from source:
+```bash
+conda create -n vdc python=3.12 -y
+conda activate vdc
 git clone https://github.com/zihao-ai/vdc
 cd vdc
-pip install -r requirements.txt
-cd LLMs/LAVIS
 pip install -e .
 ```
 
 
+## 🔍 Usage
 
-## Usage
+VDC is built on OpenAI API package.  LLM is used for generating questions and MLLM is used for answering questions. You need to set specific API key and API base url for both LLM and MLLM. 
 
-### Detect Poisoned Samples 
+### Closed-source Service
+For example, you can set the following configuration to use GPT-3.5-turbo as LLM and GPT-4o-mini as MLLM.
+```python
+from vdc.cleanser import DataCleanser
+from vdc.utils.config import VDCConfig
 
-Let's take CIFAR-10 as an example.
-
-#### 1. Data Preparation
-
-Download the poisoned dataset ([download link](https://drive.google.com/file/d/1jNoNStqOnyE3Z3ukPgbuLG0EV_TI8OGR/view?usp=drive_link)) and put it in the `data` folder.
-
-Unzip the dataset:
-```bash
-cd data
-unzip cifar10_backdoor.zip
+config = VDCConfig(
+    llm_base_url="https://api.openai.com/v1",
+    llm_api_key="sk-xxx",
+    mllm_base_url="https://api.openai.com/v1",
+    mllm_api_key="sk-xxx",
+)
+cleanser = DataCleanser(config=config, llm_model="gpt-3.5-turbo", mllm_model="gpt-4o-mini")
 ```
 
-#### 2. Visual Question Generation
-
-The generated questions have been provided in the `prompts` folder.
-
-#### 3. Visual Question Answering
-
-You should first download the pre-trained MLLM checkpoints following the docs of [InstructBLIP](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip). You can also choose other MLLMs, such as LLAVA, MiniGPT4, GPT4, QWen, Otter, LLama Adapter, etc.
-
-Then you can run the following command to answer the questions:
-
+### Open-source Service
+If you want to use open-source models, you can run the command below to start an OpenAI-compatible API service through [vLLM](https://github.com/vllm-project/vllm). Here we take [Qwen2.5-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct) as an example:
 ```bash
-python vqa_bd.py
+vllm serve Qwen/Qwen2.5-VL-7B-Instruct --port 8000 --host 0.0.0.0 --dtype bfloat16 --limit-mm-per-prompt image=5,video=5
+```
+Now you can use the following configuration to use the open-source service:
+```python
+from vdc.cleanser import DataCleanser
+from vdc.utils.config import VDCConfig
+
+config = VDCConfig(
+    llm_base_url="http://localhost:8000/v1",
+    llm_api_key="EMPTY",
+    mllm_base_url="http://localhost:8000/v1",
+    mllm_api_key="EMPTY",
+)
+cleanser = DataCleanser(config=config, llm_model="Qwen/Qwen2.5-VL-7B-Instruct", mllm_model="Qwen/Qwen2.5-VL-7B-Instruct")
+```
+### Clean Image-Text Samples
+After setting the configuration, you can clean image-text samples by the following code:
+```python
+res = cleanser.process_image_text_pair(
+    img_path="example/test.png",
+    text="A black cat is setting on a wooden chair.",
+    num_questions=5,
+    batch_qa_size=-1
+)
+print(res)
+consistency_score = res.consistency_score
+is_consistent = res.is_consistent(threshold=0.5)
+
+```
+You can clean video-text samples by the following code:
+### Clean Video-Text Samples
+```python
+res = cleanser.process_video_text_pair(
+    video_path="example/test_video.mp4",
+    text="It shows a wooden table with several items: a bouquet of flowers wrapped in newspaper, some fruits including tomatoes in a clear plastic container, and some other fruits (possibly mangoes on a white plate.",
+    num_questions=10,
+    frame_interval=50,
+    batch_qa_size=-1
+)
+consistency_score = res.consistency_score
+is_consistent = res.is_consistent(threshold=0.5)
+print(res)
 ```
 
-#### 4. Visual Answer Evaluation
-Replace the API key in `LLMs/llm_models/openai_api_pool.py` with your own OpenAI API key.
+### Parameter Description
+- `img_path`: The path to the image.
+- `video_path`: The path to the video.
+- `text`: The text description of the image or video.
+- `num_questions`: The number of questions to generate.
+- `batch_qa_size`: The batch size for question answering. If set to -1, all questions will be answered simultaneously in one query. If set to 1, the questions will be answered one by one (It will cost longer time but more accurate).
+- `frame_interval`: The interval of the frames to sample. Only used for video-text samples.
 
-Then you can run the following command to evaluate the answers:
-
-```bash
-python vae_bd.py
-```
-
-The indices of selected clean samples will be saved in the `results` folder.
-
-#### 5. Training neural network
-Training the neural network on the original poisoned dataset:
-```bash
-python train/train_on_bd.py
-```
-
-Training the neural network on the cleaned dataset:
-```bash
-python train/train_on_cleaned_bd.py
-```
+### Result Description
+- `consistency_score`: The consistency score of the image-text or video-text pair, which is the ratio of the number of correctly answered questions to the total number of questions.
+- `is_consistent`: Whether the image or video is consistent. The threshold is set to 0.5 by default.
 
 
 
-## Citation
+## 📝 Citation
 If you find our work useful, please consider citing us!
 ```bibtex
  @article{zhu2023vdc,
